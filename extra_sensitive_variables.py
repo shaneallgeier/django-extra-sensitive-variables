@@ -5,7 +5,7 @@ from django.views.debug import SafeExceptionReporterFilter, CLEANSED_SUBSTITUTE
 class ExtraSensitiveReporterFilter(SafeExceptionReporterFilter):
 
     def get_post_parameters(self, *args, **kwargs):
-        cleansed = super(ExtraSensitiveReporterFilter, self).get_post_parameters(*args, **kwargs)
+        cleansed = super(ExtraSensitiveReporterFilter, self).get_post_parameters(*args, **kwargs).copy()
         for param in settings.EXTRA_SENSITIVE_POST_PARAMETERS:
             if param in cleansed:
                 cleansed[param] = CLEANSED_SUBSTITUTE
